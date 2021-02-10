@@ -27,7 +27,7 @@ public class ProductList implements Serializable {
         return true;
     }
     
-    public Iterator getClients(){
+    public Iterator getProducts(){
         return products.iterator();
     }
     

@@ -3,6 +3,7 @@ package warehouseproject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 
 public class UserInterface {
@@ -14,6 +15,9 @@ public class UserInterface {
     private static final int ADD_CLIENT = 1;
     private static final int ADD_PRODUCT = 2;
     private static final int ADD_SUPPLIER = 3;
+    private static final int SHOW_CLIENTS = 4;
+    private static final int SHOW_PRODUCTS = 5;
+    private static final int SHOW_SUPPLIERS = 6;
     private static final int HELP = 10;
     
     //Check for previously saved data or create new warehouse instance
@@ -111,12 +115,42 @@ public class UserInterface {
         System.out.println(result);
     }
     
+    //Display all clients
+    public void displayClients(){
+        Iterator allClients = warehouse.getClients();
+        while (allClients.hasNext()){
+            Client client = (Client)(allClients.next());
+            System.out.println(client);
+      }
+    }
+    
+    //Display all products
+    public void displayProducts(){
+        Iterator allProducts = warehouse.getProducts();
+        while (allProducts.hasNext()){
+            Product product = (Product)(allProducts.next());
+            System.out.println(product);
+      }
+    }
+    
+    //Display all suppliers
+    public void displaySuppliers(){
+        Iterator allSuppliers = warehouse.getSuppliers();
+        while (allSuppliers.hasNext()){
+            Supplier supplier = (Supplier)(allSuppliers.next());
+            System.out.println(supplier);
+      }
+    }
+    
     public void help() {
         System.out.println("Enter a number between 0 and 1 as explained below: ");
         System.out.println(EXIT + " to Exit\n");
         System.out.println(ADD_CLIENT + " to add a client");
         System.out.println(ADD_PRODUCT + " to add a product");
         System.out.println(ADD_SUPPLIER + " to add a supplier");
+        System.out.println(SHOW_CLIENTS + " to show all of the clients");
+        System.out.println(SHOW_PRODUCTS + " to show all of the products");
+        System.out.println(SHOW_SUPPLIERS + " to show all of the suppliers");
     }
     
     public int getCommand() {
@@ -138,11 +172,17 @@ public class UserInterface {
             switch(command){
                 case ADD_CLIENT:        addClient();
                                         break;
-                case HELP:              help();
-                                        break;
                 case ADD_PRODUCT:       addProduct();
                                         break;
                 case ADD_SUPPLIER:      addSupplier();
+                                        break;
+                case SHOW_CLIENTS:      displayClients();
+                                        break;
+                case SHOW_PRODUCTS:     displayProducts();
+                                        break;
+                case SHOW_SUPPLIERS:    displaySuppliers();
+                                        break;
+                case HELP:              help();
                                         break;
             }
         }

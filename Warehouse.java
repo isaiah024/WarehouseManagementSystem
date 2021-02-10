@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.util.Iterator;
 
 public class Warehouse implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -76,5 +77,17 @@ public class Warehouse implements Serializable{
             return (supplier);
         }
         return null;
+    }
+    
+    public Iterator getClients(){
+        return clientList.getClients();
+    }
+    
+    public Iterator getProducts(){
+        return productList.getProducts();
+    }
+    
+    public Iterator getSuppliers(){
+        return supplierList.getSuppliers();
     }
 }

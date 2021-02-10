@@ -26,7 +26,7 @@ class SupplierList {
         return true;
     }
     
-    public Iterator getClients(){
+    public Iterator getSuppliers(){
         return suppliers.iterator();
     }
     
