@@ -1,41 +1,39 @@
 package warehouseproject;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 
-public class ClientList implements Serializable{
+class SupplierList {
     private static final long serialVersionUID = 1L;
-    private ArrayList<Client> clients = new ArrayList<>();
-    private static ClientList clientList;
+    private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
+    private static SupplierList supplierList;
     
-    public ClientList(){
+    public SupplierList(){
     }
     
     //Singleton class initializes
-    public static ClientList instance() {
-        if (clientList == null) {
-            return (clientList = new ClientList());
+    public static SupplierList instance() {
+        if (supplierList == null) {
+            return (supplierList = new SupplierList());
         }else{
-            return clientList;
+            return supplierList;
         }
     }
     
-    public boolean insertClient(Client client){
-        clients.add(client);
+    public boolean insertSupplier(Supplier supplier){
+        suppliers.add(supplier);
         return true;
     }
     
     public Iterator getClients(){
-        return clients.iterator();
+        return suppliers.iterator();
     }
     
     private void writeObject(java.io.ObjectOutputStream output) {
         try {
             output.defaultWriteObject();
-            output.writeObject(clientList);
+            output.writeObject(supplierList);
         } catch(IOException ioe) {
             ioe.printStackTrace();
         }
@@ -43,12 +41,12 @@ public class ClientList implements Serializable{
     
     private void readObject(java.io.ObjectInputStream input) {
         try {
-            if(clientList != null) {
+            if(supplierList != null) {
                 return;
             }else{
                 input.defaultReadObject();
-                if(clientList == null) {
-                    clientList = (ClientList) input.readObject();
+                if(supplierList == null) {
+                    supplierList = (SupplierList) input.readObject();
                 }else{
                     input.readObject();
                 }
@@ -59,11 +57,6 @@ public class ClientList implements Serializable{
         cnfe.printStackTrace();
         }
     }
-
-    @Override
-    public String toString() {
-        return "ClientList:" + " clients = " + Arrays.toString(clients.toArray());
-    }
-    
     
 }
+
