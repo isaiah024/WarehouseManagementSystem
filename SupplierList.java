@@ -1,10 +1,11 @@
 package warehouseproject;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-class SupplierList {
+class SupplierList implements Serializable{
     private static final long serialVersionUID = 1L;
     private ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
     private static SupplierList supplierList;

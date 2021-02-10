@@ -1,11 +1,14 @@
 package warehouseproject;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 
+//Still need to fix the retrieve and save features. Can't find the file after its been saved
 public class Warehouse implements Serializable{
     private static final long serialVersionUID = 1L;
     private static Warehouse warehouse;
@@ -38,7 +41,6 @@ public class Warehouse implements Serializable{
             ObjectInputStream input = new ObjectInputStream(file);
             input.readObject();
             ClientIDServer.retrieve(input);
-            input.readObject();
             SupplierIDServer.retrieve(input);
             return warehouse;
         }catch(IOException ioe){
@@ -49,6 +51,21 @@ public class Warehouse implements Serializable{
             return null;
         }
     }
+    
+    //Save the data
+    public static  boolean save() {
+        try {
+            FileOutputStream file = new FileOutputStream("WarehouseData");
+            ObjectOutputStream output = new ObjectOutputStream(file);
+            output.writeObject(warehouse);
+            output.writeObject(ClientIDServer.instance());
+            output.writeObject(SupplierIDServer.instance());
+            return true;
+        }catch(IOException ioe){
+            ioe.printStackTrace();
+            return false;
+        }
+  }
     
     //Add client to clientList
     public Client addClient(String name) {
@@ -79,14 +96,17 @@ public class Warehouse implements Serializable{
         return null;
     }
     
+    //Gets clients ArrayList iterator
     public Iterator getClients(){
         return clientList.getClients();
     }
     
+    //Gets products ArrayList iterator
     public Iterator getProducts(){
         return productList.getProducts();
     }
     
+    //Gets suppliers ArrayList iterator
     public Iterator getSuppliers(){
         return supplierList.getSuppliers();
     }

@@ -18,6 +18,7 @@ public class UserInterface {
     private static final int SHOW_CLIENTS = 4;
     private static final int SHOW_PRODUCTS = 5;
     private static final int SHOW_SUPPLIERS = 6;
+    private static final int SAVE = 9;
     private static final int HELP = 10;
     
     //Check for previously saved data or create new warehouse instance
@@ -78,6 +79,15 @@ public class UserInterface {
             cnfe.printStackTrace();
         }
     }
+    
+    //Save the data
+    private void save() {
+        if(warehouse.save()){
+            System.out.println(" The warehouse has been successfully saved in the file WarehouseData \n" );
+        }else{
+            System.out.println(" There has been an error in saving \n" );
+        }
+  }
     
     //Add a client to the clientList 
     public void addClient() {
@@ -151,6 +161,7 @@ public class UserInterface {
         System.out.println(SHOW_CLIENTS + " to show all of the clients");
         System.out.println(SHOW_PRODUCTS + " to show all of the products");
         System.out.println(SHOW_SUPPLIERS + " to show all of the suppliers");
+        System.out.println(SAVE + " to save the data");
     }
     
     public int getCommand() {
@@ -181,6 +192,8 @@ public class UserInterface {
                 case SHOW_PRODUCTS:     displayProducts();
                                         break;
                 case SHOW_SUPPLIERS:    displaySuppliers();
+                                        break;
+                case SAVE:              save();
                                         break;
                 case HELP:              help();
                                         break;

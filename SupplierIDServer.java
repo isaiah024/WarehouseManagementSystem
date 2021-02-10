@@ -2,8 +2,9 @@ package warehouseproject;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.Serializable;
 
-public class SupplierIDServer {
+public class SupplierIDServer implements Serializable{
      private  int idCounter;
     private static SupplierIDServer server;
     
