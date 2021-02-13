@@ -15,7 +15,7 @@ public class UserInterface {
     private static final int ADD_CLIENT = 1;
     private static final int ADD_PRODUCT = 2;
     private static final int ADD_SUPPLIER = 3;
-    private static final int ADD_TO_CART = 4; //implement
+    private static final int ADD_TO_CART = 4; //implement --> waiting for cart class
     private static final int REMOVE_FROM_CART = 5; //implement
     private static final int SHOW_CLIENTS = 6;
     private static final int SHOW_PRODUCTS = 7;
