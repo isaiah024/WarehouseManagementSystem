@@ -193,6 +193,21 @@ public class UserInterface {
     }
   }
     
+   public void removeFromCart()
+  {
+    String Cart = getToken("Enter Cart: ");
+    Cart cart;
+    if ((cart=warehouse.searchCart(cart)) == null)
+    {
+      System.out.println("Cart does not exist.");
+      return;
+    }
+     else
+    {
+      System.out.println("Product could not be removed.");
+    }
+   }
+
     
     public void help() {
         System.out.println("Enter a number between 0 and 1 as explained below: ");
@@ -249,6 +264,8 @@ public class UserInterface {
                                         break;   
                 case SHOW_CART:         displayCart();
                                         break;
+                case REMOVE_FROM_CART:   removeFromCart();
+                                         break;
                 case SAVE:              save();
                                         break;
                 case HELP:              help();
