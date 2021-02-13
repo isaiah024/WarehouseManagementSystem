@@ -20,10 +20,10 @@ public class UserInterface {
     private static final int SHOW_CLIENTS = 6;
     private static final int SHOW_PRODUCTS = 7;
     private static final int SHOW_SUPPLIERS = 8;
-    private static final int SHOW_CART = 9; //implement
-    private static final int CHANGE_CLIENT_ADDRESS = 10; //implement
-    private static final int CHANGE_PRODUCT_PRICE = 11; //implement
-    private static final int CHANGE_PRODUCT_QTY = 12; //implement
+    private static final int SHOW_CART = 9; 
+    private static final int CHANGE_CLIENT_ADDRESS = 10;
+    private static final int CHANGE_PRODUCT_PRICE = 11; 
+    private static final int CHANGE_PRODUCT_QTY = 12; 
     private static final int SAVE = 111;
     private static final int HELP = 222;
     
@@ -171,6 +171,28 @@ public class UserInterface {
             System.out.println(supplier);
       }
     }
+    public void changeProductPrice() {
+      System.out.println("Dummy Action");
+  }
+    
+  public void changeClientAddress() {
+      System.out.println("Dummy Action");
+  }
+    
+  public void changeProductQTY() {
+      System.out.println("Dummy Action");
+  }
+    
+  public void displayCart(){
+      Cart C_temp;
+    Iterator<Cart> Cart_Traversal = warehouse.getCart();
+    while ((Cart_Traversal.hasNext()) != false)
+    {
+      C_temp = Cart_Traversal.next();
+      System.out.println(cart);
+    }
+  }
+    
     
     public void help() {
         System.out.println("Enter a number between 0 and 1 as explained below: ");
@@ -218,6 +240,14 @@ public class UserInterface {
                 case SHOW_PRODUCTS:     displayProducts();
                                         break;
                 case SHOW_SUPPLIERS:    displaySuppliers();
+                                        break;
+                case CHANGE_CLIENT_ADDRESS:   changeClientAddress();
+                                        break;
+                case CHANGE_PRODUCT_PRICE:   changeProductPrice();
+                                        break;  
+                case CHANGE_PRODUCT_QTY:   changeProductQTY();
+                                        break;   
+                case SHOW_CART:         displayCart();
                                         break;
                 case SAVE:              save();
                                         break;
