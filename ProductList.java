@@ -22,6 +22,17 @@ public class ProductList implements Serializable {
         }
     }
     
+    public Product getProduct(String id){
+        Iterator allProducts = getProducts();
+        while(allProducts.hasNext()){
+            Product product = (Product)(allProducts.next());
+            if(product.getProductID().equals(id)){
+                return product;
+            }
+        }
+        return null;
+    }
+    
     public boolean insertProduct(Product product){
         this.products.add(product);
         return true;

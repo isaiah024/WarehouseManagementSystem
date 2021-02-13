@@ -28,6 +28,17 @@ public class ClientList implements Serializable{
         return true;
     }
     
+    public Client getClient(String id){
+        Iterator allClients = getClients();
+        while(allClients.hasNext()){
+            Client client = (Client)(allClients.next());
+            if(client.getId().equals(id)){
+                return client;
+            }
+        }
+        return null;
+    }
+    
     public Iterator getClients(){
         return clients.iterator();
     }

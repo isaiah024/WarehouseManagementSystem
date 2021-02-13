@@ -96,6 +96,17 @@ public class Warehouse implements Serializable{
         return null;
     }
     
+    //////Add a product to the cart//////
+    public Cart addToCart(String clientID, String productID, String qty){
+        Client client = clientList.getClient(clientID);
+        Product product = productList.getProduct(productID);
+        if(client != null && product != null){
+            client.addToCart(product);
+        }else
+            return null;
+        return client.getCart();
+    }
+    
     //Gets clients ArrayList iterator
     public Iterator getClients(){
         return clientList.getClients();

@@ -15,11 +15,17 @@ public class UserInterface {
     private static final int ADD_CLIENT = 1;
     private static final int ADD_PRODUCT = 2;
     private static final int ADD_SUPPLIER = 3;
-    private static final int SHOW_CLIENTS = 4;
-    private static final int SHOW_PRODUCTS = 5;
-    private static final int SHOW_SUPPLIERS = 6;
-    private static final int SAVE = 9;
-    private static final int HELP = 10;
+    private static final int ADD_TO_CART = 4; //implement
+    private static final int REMOVE_FROM_CART = 5; //implement
+    private static final int SHOW_CLIENTS = 6;
+    private static final int SHOW_PRODUCTS = 7;
+    private static final int SHOW_SUPPLIERS = 8;
+    private static final int SHOW_CART = 9; //implement
+    private static final int CHANGE_CLIENT_ADDRESS = 10; //implement
+    private static final int CHANGE_PRODUCT_PRICE = 11; //implement
+    private static final int CHANGE_PRODUCT_QTY = 12; //implement
+    private static final int SAVE = 111;
+    private static final int HELP = 222;
     
     //Check for previously saved data or create new warehouse instance
     private UserInterface() {
@@ -65,15 +71,16 @@ public class UserInterface {
     }
     
     //Retrieves the previous save state of the warehouse
+    //Always says the warehouse doesn't exist but it still retrieves the saved data
     private void retrieve() {
         try {
             Warehouse tempWarehouse = Warehouse.retrieve();
-            if (tempWarehouse != null) {
-                System.out.println("The warehouse has been successfully retrieved from the file WarehouseData \n" );
-                warehouse = tempWarehouse;
-            }else{
+            if (tempWarehouse == null) {
                 System.out.println("File doesnt exist; creating new warehouse" );
                 warehouse = Warehouse.instance();
+            }else{
+                System.out.println("The warehouse has been successfully retrieved from the file WarehouseData \n" );
+                warehouse = tempWarehouse;
             }
         }catch(Exception cnfe){
             cnfe.printStackTrace();
@@ -120,7 +127,20 @@ public class UserInterface {
         Supplier result;
         result = warehouse.addSupplier(name);
         if(result == null){
-            System.out.println("Could not add product");
+            System.out.println("Could not add supplier");
+        }
+        System.out.println(result);
+    }
+    
+    //////Add a product to the cart//////
+    public void addToCart(){
+        String clientID = getToken("Enter the clients id that is purchasing the product: ");
+        String productID = getToken("Enter the products id: ");
+        String qty = getToken("Enter the quantity: ");
+        Cart result;
+        result = warehouse.addToCart(clientID, productID, qty);
+        if(result == null){
+            System.out.println("Could not add product to cart");
         }
         System.out.println(result);
     }
@@ -158,9 +178,15 @@ public class UserInterface {
         System.out.println(ADD_CLIENT + " to add a client");
         System.out.println(ADD_PRODUCT + " to add a product");
         System.out.println(ADD_SUPPLIER + " to add a supplier");
+        System.out.println(ADD_TO_CART + " to add a product to cart");
+        System.out.println(REMOVE_FROM_CART + " to remove a product from the cart");
         System.out.println(SHOW_CLIENTS + " to show all of the clients");
         System.out.println(SHOW_PRODUCTS + " to show all of the products");
         System.out.println(SHOW_SUPPLIERS + " to show all of the suppliers");
+        System.out.println(SHOW_CART + " to show the products in the cart");
+        System.out.println(CHANGE_CLIENT_ADDRESS + " to change the clients address");
+        System.out.println(CHANGE_PRODUCT_PRICE + " to change the products price");
+        System.out.println(CHANGE_PRODUCT_QTY + " to change the products quantity");
         System.out.println(SAVE + " to save the data");
     }
     

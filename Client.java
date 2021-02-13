@@ -28,6 +28,10 @@ public class Client implements Serializable{
     public String getId() {
         return clientID;
     }
+    
+    public Cart getCart(){
+        return cart;
+    }
 
     public ArrayList getWaitlistedItems() {
         return waitlistedProducts;
