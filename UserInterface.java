@@ -16,7 +16,7 @@ public class UserInterface {
     private static final int ADD_PRODUCT = 2;
     private static final int ADD_SUPPLIER = 3;
     private static final int ADD_TO_CART = 4; //implement --> waiting for cart class
-    private static final int REMOVE_FROM_CART = 5; //implement
+    private static final int REMOVE_FROM_CART = 5; 
     private static final int SHOW_CLIENTS = 6;
     private static final int SHOW_PRODUCTS = 7;
     private static final int SHOW_SUPPLIERS = 8;
@@ -199,7 +199,14 @@ public class UserInterface {
     Cart cart;
     if ((cart=warehouse.searchCart(cart)) == null)
     {
-      System.out.println("Cart does not exist.");
+      System.out.println("Product does not exist.");
+      return;
+    }
+       String SupplierIDServer = getToken("Enter supplier ID: ");
+    Supplier supplier;
+    if ((supplier=warehouse.searchSupplier(SupplierIDServer)) == null)
+    {
+      System.out.println("No such supplier.");
       return;
     }
      else
@@ -249,6 +256,8 @@ public class UserInterface {
                 case ADD_PRODUCT:       addProduct();
                                         break;
                 case ADD_SUPPLIER:      addSupplier();
+                                        break;
+                case ADD_TO_CART:       addToCart();
                                         break;
                 case SHOW_CLIENTS:      displayClients();
                                         break;
