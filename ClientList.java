@@ -28,19 +28,19 @@ public class ClientList implements Serializable{
         return true;
     }
     
-    public Client getClient(String id){
-        Iterator allClients = getClients();
-        while(allClients.hasNext()){
-            Client client = (Client)(allClients.next());
-            if(client.getId().equals(id)){
-                return client;
+    public Iterator getClients(){
+        return clients.iterator();
+    }
+
+    public Client find(String clientID) {
+        Iterator it = clients.iterator();
+        while(it.hasNext()){
+            Client c = (Client)it.next();
+            if(c.getId().equals(clientID)){
+                return(c);
             }
         }
         return null;
-    }
-    
-    public Iterator getClients(){
-        return clients.iterator();
     }
     
     private void writeObject(java.io.ObjectOutputStream output) {
@@ -78,3 +78,4 @@ public class ClientList implements Serializable{
     
     
 }
+
