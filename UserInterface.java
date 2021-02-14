@@ -61,6 +61,18 @@ public class UserInterface {
         }while(true);
     }
     
+    public int getNumber(String prompt) {
+    do {
+      try {
+        String item = getToken(prompt);
+        Integer num = Integer.valueOf(item);
+        return num.intValue();
+      } catch (NumberFormatException nfe) {
+        System.out.println("Please input a number ");
+      }
+    } while (true);
+  }
+    
     //Checks if the users answer is yes or no
     private boolean yesOrNo(String prompt) {
         String more = getToken(prompt + " (Y|y)[es] or anything else for no: ");
