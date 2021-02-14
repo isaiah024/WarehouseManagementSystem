@@ -22,6 +22,11 @@ class Product implements Serializable{
         this.price = price;
     }
     
+    //copy constructor
+    public Product(Product p) {
+        this(p.getName(), p.getProductID(), 0, p.getPrice());
+    }
+    
     //Functions:
     public String getName() {
         return name;
