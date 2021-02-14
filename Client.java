@@ -36,6 +36,14 @@ public class Client implements Serializable{
     public ArrayList getWaitlistedItems() {
         return waitlistedProducts;
     }
+    
+    public boolean addToCart(Product product, int quantity){
+       return cart.addToCart(product, quantity);
+    }
+
+    public Iterator getCartContents(){
+       return cart.getCartContents();
+    }
 
     public void addWaitlistedItems(Product product) {
         waitlistedProducts.add(product);
