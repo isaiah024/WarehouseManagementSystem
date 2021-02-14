@@ -22,17 +22,6 @@ public class ProductList implements Serializable {
         }
     }
     
-    public Product getProduct(String id){
-        Iterator allProducts = getProducts();
-        while(allProducts.hasNext()){
-            Product product = (Product)(allProducts.next());
-            if(product.getProductID().equals(id)){
-                return product;
-            }
-        }
-        return null;
-    }
-    
     public boolean insertProduct(Product product){
         this.products.add(product);
         return true;
@@ -40,6 +29,17 @@ public class ProductList implements Serializable {
     
     public Iterator getProducts(){
         return products.iterator();
+    }
+
+    public Product find(String productID) {
+        Iterator it = products.iterator();
+        while(it.hasNext()){
+            Product p = (Product)it.next();
+            if(p.getProductID().equals(productID)){
+                return(p);
+            }
+        }
+        return null;
     }
     
     private void writeObject(java.io.ObjectOutputStream output) {
@@ -71,3 +71,4 @@ public class ProductList implements Serializable {
     }
     
 }
+
