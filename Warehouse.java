@@ -137,4 +137,10 @@ public class Warehouse implements Serializable{
         return client;
     }
     
+    //Change the products price
+    public Product changeQty(String id, int qty){
+        Product product = productList.getProduct(id);
+        product.setQuantity(qty);
+        return product;
+    }
 }

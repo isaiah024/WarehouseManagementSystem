@@ -183,8 +183,8 @@ public class UserInterface {
         String productID = getToken("Enter the products id that you want to modify: ");
         String qty = getToken("Enter the new quantity: ");
         int newQty = Integer.parseInt(qty);
-        Product result = warehouse.changePrice(productID, newQty);
-        if(result.getPrice() != newQty)
+        Product result = warehouse.changeQty(productID, newQty);
+        if(result.getQuantity() != newQty)
             System.out.println("Products quantity could not be changed.");
         else
             System.out.println(result);
