@@ -3,6 +3,7 @@ package warehouseproject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class Client implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -28,13 +29,13 @@ public class Client implements Serializable{
     public String getId() {
         return clientID;
     }
-    
-    public Cart getCart(){
-        return cart;
-    }
 
     public ArrayList getWaitlistedItems() {
         return waitlistedProducts;
+    }
+
+    public void addWaitlistedItems(Product product) {
+        waitlistedProducts.add(product);
     }
     
     public boolean addToCart(Product product, int quantity){
@@ -45,14 +46,6 @@ public class Client implements Serializable{
        return cart.getCartContents();
     }
 
-    public void addWaitlistedItems(Product product) {
-        waitlistedProducts.add(product);
-    }
-    
-    public void addToCart(Product product){
-        cart.addToCart(product);
-    }
-
     @Override
     public String toString() {
         return "Client: " + "name = " + getName() + ", id = " + getId() + ", waitlisted items = " + Arrays.toString(getWaitlistedItems().toArray());
@@ -61,3 +54,4 @@ public class Client implements Serializable{
     
     
 }
+
