@@ -29,6 +29,10 @@ public class Client implements Serializable{
     public String getId() {
         return clientID;
     }
+    
+    public Cart getCart(){
+        return cart;
+    }
 
     public ArrayList getWaitlistedItems() {
         return waitlistedProducts;
@@ -38,12 +42,12 @@ public class Client implements Serializable{
         waitlistedProducts.add(product);
     }
     
-    public boolean addToCart(Product product, int quantity){
-       return cart.addToCart(product, quantity);
+    public boolean addToCart(Product product, int qty){
+        return cart.addToCart(product, qty);
     }
-
+    
     public Iterator getCartContents(){
-       return cart.getCartContents();
+        return cart.getCartContents();
     }
 
     @Override
@@ -54,4 +58,3 @@ public class Client implements Serializable{
     
     
 }
-

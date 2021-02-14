@@ -6,10 +6,9 @@ import java.util.Iterator;
 
 class Cart implements Serializable{
     private static final long serialVersionUID = 1L;
-    private ArrayList<Product> products = new ArrayList<Product>();
+    private ArrayList<Product> products = new ArrayList<>();
     
     public boolean addToCart(Product product, int quantity){
-        
         //Create a copy of the product object using the copy constructor
         Product copiedProduct = new Product(product);
         copiedProduct.setQuantity(quantity);

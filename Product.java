@@ -21,7 +21,7 @@ class Product implements Serializable{
         this.quantity = quantity;
         this.price = price;
     }
-
+    
     //copy constructor
     public Product(Product p) {
         this(p.getName(), p.getProductID(), 0, p.getPrice());
@@ -82,8 +82,7 @@ class Product implements Serializable{
     }
     
     //Implement
-//    public void addSupplierPair(ProductSupplierPair pair){
-//        
-//    }
+    public void addSupplierPair(ProductSupplierPair pair){
+        
+    }
 }
-
