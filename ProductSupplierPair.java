@@ -1,4 +1,3 @@
-
 package warehouseproject;
 
 class ProductSupplierPair {
@@ -8,7 +7,7 @@ class ProductSupplierPair {
 
     public ProductSupplierPair() {
     }
-    
+
     ProductSupplierPair(String productID, String supplierID, double price) {
         this.productID = productID;
         this.supplierID = supplierID;
@@ -41,9 +40,8 @@ class ProductSupplierPair {
 
     @Override
     public String toString() {
-        return "ProductSupplierPair{" + "productID=" + productID + ", supplierID=" + supplierID + ", price=" + supplyPrice + '}';
+        return "ProductSupplierPair{" + "productID=" + productID + ", supplierID=" + supplierID + ", price="
+                + supplyPrice + '}';
     }
-    
-    
-    
+
 }

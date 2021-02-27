@@ -5,32 +5,44 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-
-class Product implements Serializable{
+class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     private String name;
     private String productID;
     private int quantity;
     private double price;
-    private ArrayList<Client> waitlistedClients = new ArrayList<>();
     private ArrayList<ProductSupplierPair> suppliers = new ArrayList<>();
+    private ArrayList<WaitlistProduct> waitlist = new ArrayList<WaitlistProduct>();
 
-    //Would I need to create a productID or have the supplier provide the productID?
+    // Would I need to create a productID or have the supplier provide the
+    // productID?
     public Product(String name, String productID, int quantity, double price) {
         this.name = name;
         this.productID = productID;
         this.quantity = quantity;
         this.price = price;
     }
-    
-    //copy constructor
+
+    // copy constructor
     public Product(Product p) {
         this(p.getName(), p.getProductID(), 0, p.getPrice());
     }
-    
-    //Functions:
+
+    // Functions:
     public String getName() {
         return name;
+    }
+
+    public void addQuantity(int qty) {
+        this.quantity += qty;
+    }
+
+    public Iterator getSuppliers() {
+        return suppliers.iterator();
+    }
+
+    public ArrayList getSupplierList() {
+        return suppliers;
     }
 
     public void setName(String name) {
@@ -40,8 +52,8 @@ class Product implements Serializable{
     public String getProductID() {
         return productID;
     }
-    
-    public void setProductID(String id){
+
+    public void setProductID(String id) {
         this.productID = id;
     }
 
@@ -52,10 +64,6 @@ class Product implements Serializable{
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    
-    public void addQuantity(int qty){
-        this.quantity += qty;
-    }
 
     public double getPrice() {
         return price;
@@ -65,41 +73,47 @@ class Product implements Serializable{
         this.price = price;
     }
 
-    public ArrayList getWaitlistedClients() {
-        return waitlistedClients;
+    // public ArrayList getSupplierList() {
+    // return supplierList;
+    // }
+    //
+    // public void addSupplierToList(Supplier supplier) {
+    // this.supplierList.add(supplier);
+    // }
+
+    public Iterator getWaitlist() {
+        return waitlist.iterator();
     }
 
-    public void addWaitlistedClients(Client client) {
-        this.waitlistedClients.add(client);
-    }
-    
-    public Iterator getSuppliers(){
-        return suppliers.iterator();
-    }
-    
-    public ArrayList getSupplierList(){
-        return suppliers;
+    public void addToWaitlist(WaitlistProduct product) {
+        this.waitlist.add(product);
     }
 
-    @Override
-    public String toString() {
-        return "Product:" + " name = " + getName() + ", productID = " + getProductID() + ", quantity = " + getQuantity() + ", price = " + getPrice() + ", supplierList = " + Arrays.toString(getSupplierList().toArray()) + ", waitlistedClients = " + Arrays.toString(getWaitlistedClients().toArray());
-    }
-    
-    //Add a supplier to the supplierList
-    public boolean addSupplier(String supplierID, double price){
+    // Add a supplier to the supplierList
+    public boolean addSupplier(String supplierID, double price) {
         ProductSupplierPair pair = new ProductSupplierPair(this.productID, supplierID, price);
         return suppliers.add(pair);
     }
-    
-    //Checks if the supplier already exixts for the product
-    public boolean checkSupplier(String supplierID){
+
+    // Checks if the supplier already exixts for the product
+    public boolean checkSupplier(String supplierID) {
         Iterator allSupplierPairs = getSuppliers();
-        while(allSupplierPairs.hasNext()){
+        while (allSupplierPairs.hasNext()) {
             ProductSupplierPair pair = (ProductSupplierPair) allSupplierPairs.next();
-            if(supplierID.equals(pair.getSupplierID()))
+            if (supplierID.equals(pair.getSupplierID()))
                 return true;
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Product:" + " name = " + getName() + ", productID = " + getProductID() + ", quantity = " + getQuantity()
+                + ", price = " + getPrice();
+    }
+
+    // Implement
+    // public void addSupplierPair(ProductSupplierPair pair){
+    //
+    // }
 }

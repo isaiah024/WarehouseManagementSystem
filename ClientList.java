@@ -6,68 +6,68 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class ClientList implements Serializable{
+public class ClientList implements Serializable {
     private static final long serialVersionUID = 1L;
     private ArrayList<Client> clients = new ArrayList<>();
     private static ClientList clientList;
-    
-    public ClientList(){
+
+    public ClientList() {
     }
-    
-    //Singleton class initializes
+
+    // Singleton class initializes
     public static ClientList instance() {
         if (clientList == null) {
             return (clientList = new ClientList());
-        }else{
+        } else {
             return clientList;
         }
     }
-    
-    public boolean insertClient(Client client){
+
+    public boolean insertClient(Client client) {
         clients.add(client);
         return true;
     }
-    
-    public Client getClient(String id){
+
+    public Client getClient(String id) {
         Iterator allClients = clients.iterator();
-        while(allClients.hasNext()){
-            Client client = (Client)(allClients.next());
-            if(client.getId().equals(id)){
+        while (allClients.hasNext()) {
+            Client client = (Client) (allClients.next());
+            if (client.getId().equals(id)) {
                 return client;
             }
         }
         return null;
     }
-    
-    public Iterator getClients(){
+
+    public Iterator getClients() {
         return clients.iterator();
     }
-    
+
     private void writeObject(java.io.ObjectOutputStream output) {
         try {
             output.defaultWriteObject();
             output.writeObject(clientList);
-        } catch(IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
-    
+
     private void readObject(java.io.ObjectInputStream input) {
         try {
-            if(clientList != null) {
+            if (clientList != null) {
                 return;
-            }else{
+            } else {
                 input.defaultReadObject();
-                if(clientList == null) {
+                if (clientList == null) {
                     clientList = (ClientList) input.readObject();
-                }else{
+                } else {
                     input.readObject();
                 }
             }
-        }catch(IOException ioe) {
-        ioe.printStackTrace();
-        }catch(ClassNotFoundException cnfe) {
-        cnfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (ClassNotFoundException cnfe) {
+            cnfe.printStackTrace();
         }
     }
 
@@ -75,6 +75,5 @@ public class ClientList implements Serializable{
     public String toString() {
         return "ClientList:" + " clients = " + Arrays.toString(clients.toArray());
     }
-    
-    
+
 }

@@ -9,65 +9,65 @@ public class ProductList implements Serializable {
     private static final long serialVersionUID = 1L;
     private ArrayList<Product> products = new ArrayList<Product>();
     private static ProductList productList;
-    
-    public ProductList(){
+
+    public ProductList() {
     }
-    
-    //Singleton class initializes
+
+    // Singleton class initializes
     public static ProductList instance() {
         if (productList == null) {
             return (productList = new ProductList());
-        }else{
+        } else {
             return productList;
         }
     }
-    
-    public Product getProduct(String id){
+
+    public Product getProduct(String id) {
         Iterator allProducts = getProducts();
-        while(allProducts.hasNext()){
-            Product product = (Product)(allProducts.next());
-            if(product.getProductID().equals(id)){
+        while (allProducts.hasNext()) {
+            Product product = (Product) (allProducts.next());
+            if (product.getProductID().equals(id)) {
                 return product;
             }
         }
         return null;
     }
-    
-    public boolean insertProduct(Product product){
+
+    public boolean insertProduct(Product product) {
         this.products.add(product);
         return true;
     }
-    
-    public Iterator getProducts(){
+
+    public Iterator getProducts() {
         return products.iterator();
     }
-    
+
     private void writeObject(java.io.ObjectOutputStream output) {
         try {
             output.defaultWriteObject();
             output.writeObject(productList);
-        } catch(IOException ioe) {
+        } catch (IOException ioe) {
             ioe.printStackTrace();
         }
     }
-    
+
     private void readObject(java.io.ObjectInputStream input) {
         try {
-            if(productList != null) {
+            if (productList != null) {
                 return;
-            }else{
+            } else {
                 input.defaultReadObject();
-                if(productList == null) {
+                if (productList == null) {
                     productList = (ProductList) input.readObject();
-                }else{
+                } else {
                     input.readObject();
                 }
             }
-        }catch(IOException ioe) {
-        ioe.printStackTrace();
-        }catch(ClassNotFoundException cnfe) {
-        cnfe.printStackTrace();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } catch (ClassNotFoundException cnfe) {
+            cnfe.printStackTrace();
         }
     }
-    
+
 }
