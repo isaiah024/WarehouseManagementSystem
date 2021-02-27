@@ -77,17 +77,34 @@ public class Warehouse implements Serializable{
     }
     
     //Add product to productList
-    public Product addProduct(String name, String productID, String tempQuantity, String tempPrice) {
-        int quantity = Integer.parseInt(tempQuantity);
+    public Product addProduct(String supplierID, String supplyPrice, String name, String productID, String tempQuantity, String tempPrice) {
+        int qty = Integer.parseInt(tempQuantity);
         double price = Double.parseDouble(tempPrice);
-        Product product = new Product(name, productID, quantity, price);
-        if(productList.insertProduct(product)) {
-            return (product);
+        Product product = productList.getProduct(productID);
+        Supplier supplier = supplierList.getSupplier(supplierID);
+        //If productsPair doesn't exist
+        if(supplier == null)
+            return null;
+        //If product doesn't exist
+        if(product == null){
+            product = new Product(name, productID, qty, price);
+            if(productList.insertProduct(product)) {
+                product.addSupplier(supplierID, Double.parseDouble(supplyPrice));
+                supplier.addProduct(productID, Double.parseDouble(supplyPrice));
+                return product;
+            }
+        }
+        //If product does exist and productsPair doesn't exist for that product
+        else if(supplier != null && !product.checkSupplier(supplier.getSupplierID())){
+            product.addSupplier(supplierID, Double.parseDouble(supplyPrice));
+            supplier.addProduct(productID, Double.parseDouble(supplyPrice));
+            product.addQuantity(qty);
+            return product;
         }
         return null;
     }
     
-    //Add supplier to supplierList
+    //Add productsPair to supplierList
     public Supplier addSupplier(String name) {
         Supplier supplier = new Supplier(name);
         if (supplierList.insertSupplier(supplier)) {
@@ -99,6 +116,8 @@ public class Warehouse implements Serializable{
     public boolean addToClientCart(String client_id, String product_id, int quantity){
         Client client = clientList.getClient(client_id);
         Product product = productList.getProduct(product_id);
+        if(client == null || product == null)
+            return false;
         return client.addToCart(product, quantity);
     }
 
@@ -123,12 +142,46 @@ public class Warehouse implements Serializable{
         return supplierList.getSuppliers();
     }
     
-    //Change the products price
-    public Product changePrice(String id, double newPrice){
-        Product product = productList.getProduct(id);
-        product.setPrice(newPrice);
-        return product;
+    //Gets a products suppliers list
+    public Iterator getProductSuppliers(String productID){
+        Product product = productList.getProduct(productID);
+        return product.getSuppliers();
     }
+    
+    //Gets a products suppliers list
+    public Iterator getSupplierProducts(String supplierID){
+        Supplier supplier = supplierList.getSupplier(supplierID);
+        return supplier.getProducts();
+    }
+    
+    public ProductSupplierPair findSupplierProduct(String productID, Iterator suppliersProducts){
+        ProductSupplierPair suppliersPair = new ProductSupplierPair();
+        while(suppliersProducts.hasNext()){
+            suppliersPair = (ProductSupplierPair) suppliersProducts.next();
+            if(suppliersPair.getSupplierID().equals(productID)){
+                break;
+            }
+        }
+        return suppliersPair;
+    }
+    
+    public ProductSupplierPair findProductSupplier(String supplierID, Iterator productsSuppliers){
+        ProductSupplierPair productsPair = new ProductSupplierPair();
+        while(productsSuppliers.hasNext()){
+            productsPair = (ProductSupplierPair) productsSuppliers.next();
+            if(productsPair.getSupplierID().equals(supplierID)){
+                break;
+            }
+        }
+        return productsPair;
+    }
+    
+    //Change the products sale price
+    public Product changeSalePrice(String productID, double newPrice){
+        Product result = productList.getProduct(productID);
+        result.setPrice(newPrice);
+        return result;
+        }
     
     //Change the clients name
     public Client changeName(String id, String name){
@@ -137,7 +190,7 @@ public class Warehouse implements Serializable{
         return client;
     }
     
-    //Change the products price
+    //Change the products qty available to sell
     public Product changeQty(String id, int qty){
         Product product = productList.getProduct(id);
         product.setQuantity(qty);

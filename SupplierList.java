@@ -31,6 +31,16 @@ class SupplierList implements Serializable{
         return suppliers.iterator();
     }
     
+    public Supplier getSupplier(String supplierID){
+        Iterator allSuppliers = getSuppliers();
+        while(allSuppliers.hasNext()){
+            Supplier supplier = (Supplier) allSuppliers.next();
+            if(supplierID.equals(supplier.getSupplierID()))
+                return supplier;
+        }
+        return null;
+    }
+    
     private void writeObject(java.io.ObjectOutputStream output) {
         try {
             output.defaultWriteObject();

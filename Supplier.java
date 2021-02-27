@@ -3,6 +3,7 @@ package warehouseproject;
 import java.util.ArrayList;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Iterator;
 
 
 
@@ -11,7 +12,7 @@ class Supplier implements Serializable{
     private String supplierID;
     private static final String MEMBER_STRING = "S";
     private String supplierName;
-    private ArrayList<Product> productList = new ArrayList<Product>();
+    private ArrayList<ProductSupplierPair> products = new ArrayList<>();
 
     public Supplier(String supplierName) {
         this.supplierID = MEMBER_STRING + (SupplierIDServer.instance()).getId();
@@ -31,11 +32,28 @@ class Supplier implements Serializable{
     }
 
     public ArrayList getProductList() {
-        return productList;
+        return products;
     }
-
-    public void addProductToList(Product product) {
-        productList.add(product);
+    
+    //Adds a product to the productList
+    public boolean addProduct(String productID, double price){
+        ProductSupplierPair pair = new ProductSupplierPair(productID, this.supplierID, price);
+        return products.add(pair);
+    }
+    
+    public Iterator getProducts(){
+        return products.iterator();
+    }
+    
+    //Checks if a product already exists in the productList
+    public boolean checkProduct(String productID){
+        Iterator allProductPairs = getProducts();
+        while(allProductPairs.hasNext()){
+            ProductSupplierPair pair = (ProductSupplierPair) allProductPairs.next();
+            if(productID.equals(pair.getProductID()))
+                return true;
+        }
+        return false;
     }
 
     @Override

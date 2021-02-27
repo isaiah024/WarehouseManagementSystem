@@ -15,14 +15,16 @@ public class UserInterface {
     private static final int ADD_CLIENT = 1;
     private static final int ADD_PRODUCT = 2;
     private static final int ADD_SUPPLIER = 3;
-    private static final int ADD_TO_CART = 4; //implement --> waiting for cart class
+    private static final int ADD_TO_CART = 4; 
     private static final int SHOW_CLIENTS = 5;
     private static final int SHOW_PRODUCTS = 6;
     private static final int SHOW_SUPPLIERS = 7;
-    private static final int SHOW_CART = 8; //implement --> waiting for cart class
-    private static final int CHANGE_CLIENT_NAME = 9;
-    private static final int CHANGE_PRODUCT_PRICE = 10;
-    private static final int CHANGE_PRODUCT_QTY = 11; //implement
+    private static final int SHOW_PRODUCT_SUPPLIERS = 8;
+    private static final int SHOW_SUPPLIER_PRODUCTS = 9;
+    private static final int SHOW_CART = 10; 
+    private static final int CHANGE_CLIENT_NAME = 11;
+    private static final int CHANGE_PRODUCT_PRICE = 12;
+    private static final int CHANGE_PRODUCT_QTY = 13; 
     private static final int SAVE = 111;
     private static final int HELP = 222;
     
@@ -108,14 +110,16 @@ public class UserInterface {
     
     //Add a product to the productList 
     public void addProduct() {
+        String supplierID = getToken("Enter the suppliers id: ");
+        String supplyPrice = getToken("Enter the supply price (XX.XX): ");
         String name = getToken("Enter product name: ");
         String productID = getToken("Enter productID: ");
         String quantity = getToken("Enter quantity: ");
-        String price = getToken("Enter the price (XX.XX): ");
+        String price = getToken("Enter the sale price (XX.XX): ");
         Product result;
-        result = warehouse.addProduct(name, productID, quantity, price);
+        result = warehouse.addProduct(supplierID, supplyPrice, name, productID, quantity, price);
         if (result == null) {
-            System.out.println("Could not add product");
+            System.out.println("Could not add product because of either: Supplier doesn't exist or Product with the Supplier already exists.");
         }
         System.out.println(result);
     }
@@ -158,17 +162,39 @@ public class UserInterface {
       }
     }
     
+    //Displays all the product's suppliers
+    public void displayProductSuppliers(){
+        String productID = getToken("Enter the products ID: ");
+        Iterator productSuppliers = warehouse.getProductSuppliers(productID);
+        while(productSuppliers.hasNext()){
+            ProductSupplierPair pair = (ProductSupplierPair) productSuppliers.next();
+            System.out.println(pair.getSupplierID());
+        }
+    }
+    
+    //Displays all the supplier's products
+    public void displaySupplierProducts(){
+        String supplierID = getToken("Enter the suppliers ID: ");
+        Iterator supplierProducts = warehouse.getSupplierProducts(supplierID);
+        while(supplierProducts.hasNext()){
+            ProductSupplierPair pair = (ProductSupplierPair) supplierProducts.next();
+            System.out.println(pair.getProductID());
+        }
+    }
+    
+    //Changes a products price
     public void changeProductPrice() {
-        String productID = getToken("Enter the products id that you want to modify: ");
+        String productID = getToken("Enter the product's id that you want to modify: ");
         String price = getToken("Enter the new price (XX.XX): ");
         double newPrice = Double.parseDouble(price);
-        Product result = warehouse.changePrice(productID, newPrice);
+        Product result = warehouse.changeSalePrice(productID, newPrice);
         if(result.getPrice() != newPrice)
             System.out.println("Products price could not be changed.");
         else
             System.out.println(result);
     }
     
+    //Changes the clients name
     public void changeClientName() {
         String clientID = getToken("Enter the clients id that you want to modify: ");
         String name = getToken("Enter the new name: ");
@@ -179,9 +205,10 @@ public class UserInterface {
             System.out.println(result);
     }
     
+    //Changes a products qty
     public void changeProductQty() {
         String productID = getToken("Enter the products id that you want to modify: ");
-        String qty = getToken("Enter the new quantity: ");
+        String qty = getToken("Enter the amount that you would like to change the quantity to: ");
         int newQty = Integer.parseInt(qty);
         Product result = warehouse.changeQty(productID, newQty);
         if(result.getQuantity() != newQty)
@@ -229,6 +256,8 @@ public class UserInterface {
         System.out.println(SHOW_CLIENTS + " to show all of the clients");
         System.out.println(SHOW_PRODUCTS + " to show all of the products");
         System.out.println(SHOW_SUPPLIERS + " to show all of the suppliers");
+        System.out.println(SHOW_PRODUCT_SUPPLIERS + " to show all of a product's suppliers");
+        System.out.println(SHOW_SUPPLIER_PRODUCTS + " to show all of the supplier's products");
         System.out.println(SHOW_CART + " to show the products in the cart");
         System.out.println(CHANGE_CLIENT_NAME + " to change the clients name");
         System.out.println(CHANGE_PRODUCT_PRICE + " to change the products price");
@@ -266,6 +295,10 @@ public class UserInterface {
                 case SHOW_PRODUCTS:     displayProducts();
                                         break;
                 case SHOW_SUPPLIERS:    displaySuppliers();
+                                        break;
+                case SHOW_PRODUCT_SUPPLIERS: displayProductSuppliers();
+                                        break;
+                case SHOW_SUPPLIER_PRODUCTS: displaySupplierProducts();
                                         break;
                 case CHANGE_CLIENT_NAME:   changeClientName();
                                         break;
