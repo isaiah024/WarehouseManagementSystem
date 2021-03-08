@@ -29,6 +29,10 @@ public class UserInterface {
     private static final int SHOW_CLIENT_WAITLIST = 15;
     private static final int SHOW_PRODUCT_WAITLIST = 16;
     private static final int SHOW_TRANSACTIONS = 17;
+    private static final int REMOVE_FROM_CART = 18;
+    private static final int SHOW_BALANCE = 19;
+    private static final int ACCEPT_PAYMENT = 20;
+    
 
     private static final int SAVE = 111;
     private static final int HELP = 222;
@@ -211,6 +215,23 @@ public class UserInterface {
             System.out.println(result);
     }
 
+    // Show client balance
+    public void showBalance() {
+        String clientID = getToken("Enter the client's id to view balance: ");
+        double balance = warehouse.getBalance(clientID);
+        System.out.println("The client's balance is: " + balance);
+        
+    }
+
+    // Accept payment
+    public void acceptPayment() {
+        String clientID = getToken("Enter the client's ID to accept payment: ");
+        String amountString = getToken("Enter the amount of money to be paid: ");
+        double amount = Double.parseDouble(amountString);
+        double newBalance = warehouse.acceptPayment(clientID, amount);
+        System.out.println("Payment accepted. The client's updated balance is: " + newBalance);
+    }
+
     // Show client transactions
     public void showTransactions() {
         String clientID = getToken("Enter the clients id to view transactions ");
@@ -239,6 +260,21 @@ public class UserInterface {
         String product_id = getToken("Enter product id");
         int product_quantity = getNumber("Enter product quantity");
         warehouse.addToClientCart(client_id, product_id, product_quantity);
+    }
+
+    // Remove from client cart
+    public void removeFromClientCart() {
+        String client_id = getToken("Enter client id");
+        String product_id = getToken("Enter product id");
+        int product_quantity = getNumber("Enter product quantity to remove");
+        boolean result = warehouse.removeFromClientCart(client_id, product_id, product_quantity);
+
+        if(result){
+            System.out.println("Successfully removed product from cart. ");
+        }
+        else{
+            System.out.println("Error: Unable to remove from cart. Check that client id and product id are correct. ");
+        }
     }
 
     // Add product to client cart
@@ -312,6 +348,9 @@ public class UserInterface {
         System.out.println(SHOW_CLIENT_WAITLIST + " to show all products the client is waitlisted for");
         System.out.println(SHOW_PRODUCT_WAITLIST + " to show all clients waiting for the product");
         System.out.println(SHOW_TRANSACTIONS + " to show a client's transactions");
+        System.out.println(SHOW_BALANCE + " to show a client's balance");
+        System.out.println(ACCEPT_PAYMENT + " to accept a client payment");
+        System.out.println(REMOVE_FROM_CART + " to remove a product from cart");
 
         System.out.println(SAVE + " to save the data");
     }
@@ -383,6 +422,15 @@ public class UserInterface {
                     break;
                 case SHOW_TRANSACTIONS:
                     showTransactions();
+                    break;
+                case REMOVE_FROM_CART:
+                    removeFromClientCart();
+                    break;
+                case SHOW_BALANCE:
+                    showBalance();
+                    break;
+                case ACCEPT_PAYMENT:
+                    acceptPayment();
                     break;
                 case SAVE:
                     save();

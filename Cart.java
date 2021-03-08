@@ -15,6 +15,29 @@ class Cart implements Serializable {
         return products.add(copiedProduct);
     }
 
+    public boolean removeFromCart(String product_id, int quantity){
+        Iterator it = products.iterator();
+
+        while(it.hasNext()){
+            Product p = (Product)it.next();
+            System.out.println("p.getProductID is: " + p.getProductID() + " product_id is: " + product_id);
+            if(p.getProductID().equals(product_id)){
+                int newQuantity = p.getQuantity() - quantity;
+                if(newQuantity <= 0){
+                    it.remove();
+                    return true;
+                }
+
+                else{
+                    p.setQuantity(newQuantity);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public Iterator getCartContents() {
         return products.iterator();
     }

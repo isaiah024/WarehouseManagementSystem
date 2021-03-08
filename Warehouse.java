@@ -122,6 +122,13 @@ public class Warehouse implements Serializable {
         return client.addToCart(product, quantity);
     }
 
+    public boolean removeFromClientCart(String client_id, String product_id, int quantity) {
+        Client client = clientList.getClient(client_id);
+        if (client == null)
+            return false;
+        return client.removeFromCart(product_id, quantity);
+    }
+
     public Iterator getCartContents(String client_id) {
 
         Client client = clientList.getClient(client_id);
@@ -205,6 +212,16 @@ public class Warehouse implements Serializable {
         return client;
     }
 
+    public double getBalance(String client_id){
+        Client client = clientList.getClient(client_id);
+        return client.getBalance();
+    }
+
+    public double acceptPayment(String client_id, double amount ){
+        Client client = clientList.getClient(client_id);
+        return client.setBalance(client.getBalance() - amount);
+    }
+
     public Iterator getClientWaitlist(String client_id) {
         Client c = clientList.getClient(client_id);
         return c.getWaitlist();
@@ -283,7 +300,7 @@ public class Warehouse implements Serializable {
         }
 
         // decrease balance by shipped products total cost
-        client.setBalance(client.getBalance() - invoice.getTotalCost());
+        client.setBalance(client.getBalance() + invoice.getTotalCost());
 
         // Creates and stores order with cart contents then clears cart
         client.createOrder(invoice.getTotalCost());

@@ -52,8 +52,9 @@ public class Client implements Serializable {
         return balance;
     }
 
-    public void setBalance(double bal) {
+    public double setBalance(double bal) {
         balance = bal;
+        return balance;
     }
 
     public Iterator getWaitlist() {
@@ -66,6 +67,10 @@ public class Client implements Serializable {
 
     public boolean addToCart(Product product, int qty) {
         return cart.addToCart(product, qty);
+    }
+
+    public boolean removeFromCart(String product_id, int qty) {
+        return cart.removeFromCart(product_id, qty);
     }
 
     public Iterator getCartContents() {
