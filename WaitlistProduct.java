@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package warehouseproject;
+package warehouseProject;
 
 import java.util.*;
 import java.io.*;

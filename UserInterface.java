@@ -1,4 +1,4 @@
-package warehouseproject;
+package warehouseProject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +15,7 @@ public class UserInterface {
     private static final int ADD_CLIENT = 1;
     private static final int ADD_PRODUCT = 2;
     private static final int ADD_SUPPLIER = 3;
-    private static final int ADD_TO_CART = 4; // implement --> waiting for cart class
+    private static final int ADD_TO_CART = 4; 
     private static final int SHOW_CLIENTS = 5;
     private static final int SHOW_PRODUCTS = 6;
     private static final int SHOW_SUPPLIERS = 7;
@@ -29,6 +29,7 @@ public class UserInterface {
     private static final int SHOW_CLIENT_WAITLIST = 15;
     private static final int SHOW_PRODUCT_WAITLIST = 16;
     private static final int SHOW_TRANSACTIONS = 17;
+    private static final int RECEIVE_SHIPMENT = 18;
 
     private static final int SAVE = 111;
     private static final int HELP = 222;
@@ -129,7 +130,7 @@ public class UserInterface {
         }
         System.out.println(result);
     }
-
+    
     // Add a supplier to the supplierList
     public void addSupplier() {
         String name = getToken("Enter the suppliers name: ");
@@ -291,6 +292,47 @@ public class UserInterface {
             }
         } while (true);
     }
+    
+    //Accept a shipment from a supplier
+    public void acceptShipment(){
+        String productID = getToken("Enter productID: ");
+        int quantity = Integer.parseInt(getToken("Enter quantity: "));
+        Product result = warehouse.getProduct(productID);
+        
+        //Checks if product exists
+        if(result == null) {
+            System.out.println("Product does not exist.");
+            //End function here
+        }
+        
+        //Gets a products waitlist list
+        Iterator waitlist = result.getWaitlist();
+        WaitlistProduct waitlistedClient;
+        
+        //Gets the waitlisted clients orders and asks if the user wants to full fll the order
+        while(waitlist.hasNext()){
+            waitlistedClient = (WaitlistProduct) waitlist.next();
+            if(yesOrNo("Would you like to full fill the order for client: " + waitlistedClient.getClient().getId())){
+                if(waitlistedClient.getQuantity() <= quantity){
+                    System.out.println(warehouse.fullfillWaitlistedOrder(waitlistedClient));
+                    quantity -= waitlistedClient.getQuantity();
+                }
+                else
+                    System.out.println("The order quantity is more than the available quantity");
+            }
+            if(quantity == 0){
+                break;
+            }
+        }
+        
+        //Remove all waitlisted orders from client and product
+        warehouse.removeWaitlistedOrders();
+        
+        //Sets any remaining quantity to the product
+        if(quantity > 0)
+            result.setQuantity(quantity);
+    }
+
 
     public void help() {
         System.out.println("Enter a number between 0 and 1 as explained below: ");
@@ -312,6 +354,7 @@ public class UserInterface {
         System.out.println(SHOW_CLIENT_WAITLIST + " to show all products the client is waitlisted for");
         System.out.println(SHOW_PRODUCT_WAITLIST + " to show all clients waiting for the product");
         System.out.println(SHOW_TRANSACTIONS + " to show a client's transactions");
+        System.out.println(RECEIVE_SHIPMENT + " to accept a shipment from a supplier");
 
         System.out.println(SAVE + " to save the data");
     }
@@ -384,6 +427,9 @@ public class UserInterface {
                 case SHOW_TRANSACTIONS:
                     showTransactions();
                     break;
+                case RECEIVE_SHIPMENT:
+                    acceptShipment();
+                    break;
                 case SAVE:
                     save();
                     break;
@@ -393,8 +439,38 @@ public class UserInterface {
             }
         }
     }
+    
+    public void test(){
+        System.out.println(warehouse.addClient("Isaiah") + "\n");
+        System.out.println(warehouse.addSupplier("Isaiah") + "\n");
+        System.out.println(warehouse.addProduct("S1", "1", "Ball", "123", "2", "2") + "\n");
+        System.out.println(warehouse.addToClientCart("C1", "123", 10) + "\n");
+        
+        /*
+        displayClients();
+        displayProducts();
+        displaySuppliers();
+        displayClientCart();
+        showClientWaitlist();
+        showProductWaitlist();
+        displayProductSuppliers();
+        displaySupplierProducts();
+        
+        System.out.println(warehouse.changeName("C1", "Bob"));
+        System.out.println(warehouse.changePrice("123", 5));
+        System.out.println(warehouse.changeQty("123", 2));
+        */
+        
+
+        placeClientOrder();
+        acceptShipment();
+        showClientWaitlist();
+        showProductWaitlist();
+        save();
+    }
 
     public static void main(String[] args) {
+        //UserInterface.instance().test();
         UserInterface.instance().process();
     }
 

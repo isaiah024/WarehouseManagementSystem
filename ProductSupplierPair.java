@@ -1,11 +1,14 @@
-package warehouseproject;
+package warehouseProject;
 
-class ProductSupplierPair {
+import java.io.Serializable;
+
+class ProductSupplierPair implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String productID;
     private String supplierID;
     private double supplyPrice;
 
-    public ProductSupplierPair() {
+    public ProductSupplierPair(){
     }
 
     ProductSupplierPair(String productID, String supplierID, double price) {
