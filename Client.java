@@ -1,4 +1,4 @@
-package warehouseproject;
+package warehouseProject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -56,9 +56,17 @@ public class Client implements Serializable {
         balance = bal;
         return balance;
     }
+    
+    public void addToBalance(double bal){
+        balance += bal;
+    }
 
     public Iterator getWaitlist() {
         return waitlist.iterator();
+    }
+    
+    public boolean removeWaitlist(WaitlistProduct waitlistProduct){
+        return waitlist.remove(waitlistProduct);
     }
 
     public void addToWaitlist(WaitlistProduct product) {

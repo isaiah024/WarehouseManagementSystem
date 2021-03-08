@@ -1,4 +1,4 @@
-package warehouseproject;
+package warehouseProject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -73,20 +73,16 @@ class Product implements Serializable {
         this.price = price;
     }
 
-    // public ArrayList getSupplierList() {
-    // return supplierList;
-    // }
-    //
-    // public void addSupplierToList(Supplier supplier) {
-    // this.supplierList.add(supplier);
-    // }
-
     public Iterator getWaitlist() {
         return waitlist.iterator();
     }
 
     public void addToWaitlist(WaitlistProduct product) {
         this.waitlist.add(product);
+    }
+    
+    public void removeWaitlist(WaitlistProduct waitlistClient){
+        waitlist.remove(waitlistClient);
     }
 
     // Add a supplier to the supplierList
@@ -111,9 +107,4 @@ class Product implements Serializable {
         return "Product:" + " name = " + getName() + ", productID = " + getProductID() + ", quantity = " + getQuantity()
                 + ", price = " + getPrice();
     }
-
-    // Implement
-    // public void addSupplierPair(ProductSupplierPair pair){
-    //
-    // }
 }

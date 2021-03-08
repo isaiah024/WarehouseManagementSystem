@@ -1,4 +1,4 @@
-package warehouseproject;
+package warehouseProject;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 //Still need to fix the retrieve and save features. Can't find the file after its been saved
@@ -15,6 +16,7 @@ public class Warehouse implements Serializable {
     private ClientList clientList;
     private ProductList productList;
     private SupplierList supplierList;
+    private ArrayList<WaitlistProduct> removeWaitlist = new ArrayList<>();
 
     // instantaniate all singletons that are in this class
     public Warehouse() {
@@ -102,6 +104,9 @@ public class Warehouse implements Serializable {
             product.addQuantity(qty);
             return product;
         }
+        //If product does exist and productPair does exist
+        else if(supplier != null && product.checkSupplier(supplier.getSupplierID()))
+            System.out.println("Product already exists with the supplier. To add to the products quantity use a different command.");
         return null;
     }
 
@@ -145,6 +150,10 @@ public class Warehouse implements Serializable {
         return productList.getProducts();
     }
 
+    public Product getProduct(String productID){
+        return productList.getProduct(productID);
+    }
+    
     // Gets suppliers ArrayList iterator
     public Iterator getSuppliers() {
         return supplierList.getSuppliers();
@@ -301,6 +310,7 @@ public class Warehouse implements Serializable {
 
         // decrease balance by shipped products total cost
         client.setBalance(client.getBalance() + invoice.getTotalCost());
+        //client.addToBalance(0-invoice.getTotalCost());
 
         // Creates and stores order with cart contents then clears cart
         client.createOrder(invoice.getTotalCost());
@@ -309,4 +319,39 @@ public class Warehouse implements Serializable {
 
     }
 
+    public Invoice fullfillWaitlistedOrder(WaitlistProduct waitlist){
+        //Gets waitlisted clients, products, and quantity
+        //Creates a new invoice for the waitlisred order
+        Client client = waitlist.getClient();
+        Product product = waitlist.getProduct();
+        int invoiceQuantity = waitlist.getQuantity();
+        Invoice invoice = new Invoice();
+        
+        //Creates a copy of the product reference to be added to the invoice and sets the quantity to the waitlisted order quantity
+        Product invoiceProduct = new Product(product);
+        invoiceProduct.setQuantity(invoiceQuantity);
+        
+        //Creates a new invoice with the waitlisted product
+        invoice.addProduct(invoiceProduct);
+        
+        //Add the waitlisted product/client to the removeWaitlist
+        removeWaitlist.add(waitlist);
+        
+        //Updates the clients balance
+        client.addToBalance(0-invoice.getTotalCost());
+        return invoice;
+    }
+    
+    public void removeWaitlistedOrders(){
+        Client client;
+        Product product;
+        for(WaitlistProduct wait : removeWaitlist){
+            client = wait.getClient();
+            product = wait.getProduct();
+            client.removeWaitlist(wait);
+            product.removeWaitlist(wait);
+        }
+        removeWaitlist.clear();
+    }
+    
 }

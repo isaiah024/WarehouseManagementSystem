@@ -1,9 +1,10 @@
-package warehouseproject;
+package warehouseProject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+//Modifying file with comment 
 class Cart implements Serializable {
     private static final long serialVersionUID = 1L;
     private ArrayList<Product> products = new ArrayList<>();

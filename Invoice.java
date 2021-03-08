@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package warehouseproject;
+package warehouseProject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -13,7 +14,8 @@ import java.util.Iterator;
  *
  * @author Chandler
  */
-public class Invoice {
+public class Invoice implements Serializable{
+    private static final long serialVersionUID = 1L;
     private double totalCost;
     private ArrayList<Product> shippedProducts;
 
