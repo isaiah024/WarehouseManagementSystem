@@ -84,31 +84,31 @@ public class WarehouseContext {
         states[currentState].run();
     }
 
-  private void terminate(){
-   if (yesOrNo("Save data?")) {
-      if (warehouse.save()) {
-         System.out.println(" The library has been successfully saved in the file LibraryData \n" );
-       } else {
-         System.out.println(" There has been an error in saving \n" );
+    private void terminate(){
+     if (yesOrNo("Save data?")) {
+        if (warehouse.save()) {
+           System.out.println(" The library has been successfully saved in the file LibraryData \n" );
+         } else {
+           System.out.println(" There has been an error in saving \n" );
+         }
        }
-     }
-   System.out.println(" Goodbye \n "); System.exit(0);
-  }
-
-  public static WarehouseContext instance() {
-    if (context == null) {
-       System.out.println("calling constructor");
-      context = new WarehouseContext();
+     System.out.println(" Goodbye \n "); System.exit(0);
     }
-    return context;
-  }
 
-  public void process(){
-    states[currentState].run();
-  }
+    public static WarehouseContext instance() {
+      if (context == null) {
+         System.out.println("calling constructor");
+        context = new WarehouseContext();
+      }
+      return context;
+    }
+
+    public void process(){
+      states[currentState].run();
+    }
   
-  public static void main (String[] args){
-    WarehouseContext.instance().process(); 
-  }
+    public static void main (String[] args){
+      WarehouseContext.instance().process(); 
+    }
     
 }
