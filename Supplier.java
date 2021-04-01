@@ -1,4 +1,4 @@
-package warehouseProject;
+package warehouseproject;
 
 import java.util.ArrayList;
 import java.io.Serializable;

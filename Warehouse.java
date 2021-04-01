@@ -1,4 +1,4 @@
-package warehouseProject;
+package warehouseproject;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -143,6 +143,10 @@ public class Warehouse implements Serializable {
     // Gets clients ArrayList iterator
     public Iterator getClients() {
         return clientList.getClients();
+    }
+
+    public Client searchMembership(String client_id) {
+        return clientList.getClient(client_id);
     }
 
     // Gets products ArrayList iterator

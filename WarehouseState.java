@@ -1,5 +1,5 @@
 
-package warehouseProject;
+package warehouseproject;
 
 public abstract class WarehouseState{
     protected static WarehouseContext context;

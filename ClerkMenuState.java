@@ -1,5 +1,5 @@
 
-package warehouseProject;
+package warehouseproject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -79,7 +79,7 @@ public class ClerkMenuState extends WarehouseState{
     public int getCommand() {
         do {
             try {
-                int value = Integer.parseInt(getToken("Enter command: " + HELP + " for help"));
+                int value = Integer.parseInt(getToken("\nEnter command: " ));
                 if (value >= EXIT && value <= HELP) {
                     return value;
                 }
@@ -125,7 +125,15 @@ public class ClerkMenuState extends WarehouseState{
     }
     
     public void becomeClient(){
-        
+
+    String client_id = getToken("Please input the client id: ");
+    if (Warehouse.instance().searchMembership(client_id) != null){
+      (WarehouseContext.instance()).setClient(client_id);      
+      (WarehouseContext.instance()).changeState(1);
+    }
+    else 
+      System.out.println("Invalid client id.");
+  
     }
     
     public void displayWaitlist(){
@@ -177,18 +185,24 @@ public class ClerkMenuState extends WarehouseState{
     }
     
     public void logout(){
-        
+        if ((WarehouseContext.instance()).getLogin() == WarehouseContext.IsManager)
+           { 
+             (WarehouseContext.instance()).changeState(3);
+            }
+        else 
+           (WarehouseContext.instance()).changeState(2); 
     }
     
     public void help(){
-        System.out.println(EXIT + " to exit the system.");
-        System.out.println(ADDCLIENT + " to add a client to the system.");
+        System.out.println("\nCLERK MENU");
+        System.out.println(+ ADDCLIENT + " to add a client to the system.");
         System.out.println(SHOWPRODUCTS + " to show all of the prducts and their prices in the system.");
         System.out.println(SHOWCLIENTS + " to show all of the clients in the system.");
         System.out.println(SHOWOUTCLIENTS + " to show all of the clients with an oustanding balance.");
         System.out.println(BECOMECLIENT + " to become a client.");
         System.out.println(DISPLAYWAITLIST + " to show all the waitlisted orders for a product.");
         System.out.println(SHIPMENT + " to accept a shipment.");
+        System.out.println(LOGOUT + " to logout.");
     }
     
     public void process(){
@@ -217,7 +231,11 @@ public class ClerkMenuState extends WarehouseState{
                 case SHIPMENT:
                     receiveShipment();
                     break;
+                case LOGOUT:
+                    logout();
+                    break;
             }
+            help();
         }
         logout();
     }

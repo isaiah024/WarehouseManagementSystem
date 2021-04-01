@@ -1,4 +1,4 @@
-package warehouseProject;
+package warehouseproject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 
 public class UserInterface {
+
+
+     
 
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static UserInterface userInterface;
@@ -516,7 +519,6 @@ public class UserInterface {
     }
 
     public static void main(String[] args) {
-        //UserInterface.instance().test();
         UserInterface.instance().process();
     }
 

@@ -1,4 +1,4 @@
-package warehouseProject;
+package warehouseproject;
 
 import java.util.*;
 import java.text.*;
@@ -18,8 +18,9 @@ public class ManagerState extends WarehouseState {
     private static final int SHOW_SUPPLIER_PRODUCTS = 5;
     private static final int CHANGE_PRODUCT_PRICE = 6;
     private static final int CHANGE_PRODUCT_QTY = 7;
-     private static final int REMOVE_FROM_CART = 8;
+    private static final int REMOVE_FROM_CART = 8;
     private static final int CLERK_MENU = 9;
+    private static final int LOGOUT = 10;
     private static final int HELP = 12;
     
     private ManagerState() {
@@ -226,7 +227,7 @@ public class ManagerState extends WarehouseState {
 
     private void ClerkMenu()
     {     
-      (WarehouseContext.instance()).changeState(1); //go to Clerk state
+      (WarehouseContext.instance()).changeState(0); //go to Clerk state
     }
     
     private void save() {
@@ -254,8 +255,7 @@ public class ManagerState extends WarehouseState {
     }
 
     private void help() {
-        System.out.println("Enter a number between " + EXIT + " and " + HELP + " as explained below:");
-        System.out.println(EXIT + " to Exit\n");
+        System.out.println("\nMANAGER MENU");
         System.out.println(ADD_PRODUCT + " to add products");
         System.out.println(ADD_SUPPLIER + " to add suppliers");
         System.out.println(SHOW_PRODUCT_SUPPLIERS + " to show all of a product's suppliers");
@@ -264,12 +264,13 @@ public class ManagerState extends WarehouseState {
         System.out.println(CHANGE_PRODUCT_QTY + " to change the products quantity");
         System.out.println(CLERK_MENU + " to  switch to the Clerk      Person menu");
         System.out.println(REMOVE_FROM_CART + " to remove a product from cart");
-        System.out.println(HELP + " for help.");
+        System.out.println(LOGOUT + " to logout");
+        
+        //System.out.println(HELP + " for help.");
     }
     
-    public void logout()
-    {
-        (WarehouseContext.instance()).changeState(3); // exit
+    public void logout(){
+        (WarehouseContext.instance()).changeState(2);
     }
     
     public void process() {
@@ -304,10 +305,14 @@ public class ManagerState extends WarehouseState {
                 case CLERK_MENU: 
                     ClerkMenu();
                     break;
+                case LOGOUT: 
+                    logout();
+                    break;
                 case HELP: 
                     help();
                     break;
             }
+            help();
         }
         logout();
     }

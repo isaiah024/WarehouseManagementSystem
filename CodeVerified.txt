@@ -1,0 +1,16 @@
+To compile: 
+1) javac UserInterface.java
+2) java UserInterface
+
+To use program:
+1) Add supplier(s)
+2) Add product(s)
+3) Add client(s)
+4) View all products
+5) Add products to cart
+6) Place order
+7) View waitlists
+8) Accept shipment
+9) view waitlists and inventory to see how the shipment effected each
+10) Accept payment from client
+11) perform queries to check client balance, products in stock, suppliers, clients, which products are supplied by which supplieres, etc. 
